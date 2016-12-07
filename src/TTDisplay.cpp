@@ -13,8 +13,16 @@ TTDisplay::TTDisplay () {
     selectedDisplayElement = 0; // index of the current display element
     displayElementInputMode = false;
 
+    
+
     elements[0] = new DistanceLabel(0,0);
     elements[1] = new DistanceValue(0,1);
+    elements[2] = new ScaleLabel(14,0);
+    elements[3] = new ScaleValue(18,1);
+    elements[4] = new TimeLabel(0,2);
+    elements[5] = tv = new TimeValue(0,3);
+    elements[6] = new SpeedLabel(10,2);
+    elements[7] = sv = new SpeedValue(10,3);
 }
 
 void TTDisplay::lcdPrintLine(int line, const char *msg) {
@@ -61,11 +69,11 @@ void TTDisplay::input( InputEvent ie ) {
         // event is used to select the display element
         switch ( ie.getEventType() ) {
         case InputEvent::IE_CW:
-            nextElement();
+            do { nextElement(); } while (! elements[selectedDisplayElement]->acceptsFocus());
             elements[selectedDisplayElement]->setFocus(lcd);
             break;
         case InputEvent::IE_CCW:
-            prevElement();
+            do { prevElement(); } while (! elements[selectedDisplayElement]->acceptsFocus());
             elements[selectedDisplayElement]->setFocus(lcd);
             break;
         case InputEvent::IE_BUTTON:
@@ -79,8 +87,21 @@ void TTDisplay::input( InputEvent ie ) {
     }
 }
 
+long lastUpdateMillis = 0;
+
+
 void TTDisplay::updateDisplay() {
+
+    // Let's set the elapsed into the TimeValue element, and calc speed for the SpeedValue
+    // but only do it every 
+
+    if (isTiming() && (100 > (millis() - lastUpdateMillis))) {
+        tv->setElapsed( getElapsed());
+    }
+    
     for ( int i = 0; i < ELEMENTCOUNT; ++i) {
         elements[i]->updateDisplay(lcd);
     }
+
+    
 }

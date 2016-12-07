@@ -11,7 +11,7 @@
 #define   CONTRAST       110
 
 
-#define ELEMENTCOUNT 2
+#define ELEMENTCOUNT 8
 
 
 class TTDisplay {
@@ -19,7 +19,7 @@ class TTDisplay {
  public:
     TTDisplay();
     // Timing methods
-    void startTimer() { startTime = millis(); } // records the start millis
+    void startTimer() { startTime = millis(); endTime = 0; } // records the start millis
     void stopTimer()  { endTime = millis(); }   // records the stop millis
     boolean isTiming() { return (startTime > 1 && endTime == 0); }   // true if startTimer is recorded, but no stopTimer yet
     long getElapsed() { if (endTime != 0) { return endTime - startTime; } else { return (millis() - startTime); } }// current time minus start if still timing, else stop - start.
@@ -32,8 +32,13 @@ class TTDisplay {
 
     void resetTimer() { startTime = 0; endTime = 0; updateDisplay(); }
 
+    // Mark all elements to dirtyVal
+    void setDirty(boolean dirtyVal) { for(int i = 0; i < ELEMENTCOUNT; ++i) elements[i]->setDirty(dirtyVal); }
+
  private:
     DisplayElement *elements[ELEMENTCOUNT];
+    TimeValue *tv;
+    SpeedValue *sv;
 
     int selectedDisplayElement;
     bool displayElementInputMode;

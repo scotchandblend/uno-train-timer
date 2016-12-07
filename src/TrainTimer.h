@@ -24,7 +24,9 @@ enum ImperialDistance {
     IMPERIAL_MI
 };
 
-
+RailroadScale nextScale (RailroadScale s);
+RailroadScale prevScale (RailroadScale s);
+const char *railroadScaleEnumToStr(RailroadScale s);
 
 class TrainTimerEEPROM {
 public:

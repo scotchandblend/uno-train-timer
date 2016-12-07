@@ -70,7 +70,7 @@ Encoder myEnc(2, 3);
 #define ENCODER_BUTTON_PIN 10
 Bounce debouncer_encoder_button = Bounce();
 
-#define TIMER_BUTTON_PIN 10
+#define TIMER_BUTTON_PIN 9
 Bounce debouncer_timer_button = Bounce();
 
 // Scale Table
@@ -81,6 +81,46 @@ double inchesToScaleFeet( char *scale ) {
         return 0.0;
     }
 }
+
+// circular increment/decrement operators for RailroadScale
+RailroadScale nextScale (RailroadScale s) {
+    switch(s) {
+    case RAILROADSCALE_O:
+        return(RAILROADSCALE_HO);
+    case RAILROADSCALE_HO:
+        return(RAILROADSCALE_N);
+    case RAILROADSCALE_N:
+        return(RAILROADSCALE_O);
+    default:
+        return RAILROADSCALE_O;
+    }
+}
+RailroadScale prevScale (RailroadScale s) {
+    switch(s) {
+    case RAILROADSCALE_O:
+        return(RAILROADSCALE_N);
+    case RAILROADSCALE_HO:
+        return(RAILROADSCALE_O);
+    case RAILROADSCALE_N:
+        return(RAILROADSCALE_HO);
+    default:
+        return RAILROADSCALE_O;
+    }
+}
+
+const char *railroadScaleEnumToStr(RailroadScale s) {
+    switch(s) {
+    case RAILROADSCALE_O:
+        return "O";
+    case RAILROADSCALE_HO:
+        return "HO";
+    case RAILROADSCALE_N:
+        return "N";
+    default:
+        return "??";
+    }
+}
+
 
 TTDisplay myDisplay;
 
@@ -107,6 +147,16 @@ void loop()
 {
     int inputsCount = 0;
     InputEvent inputs[5];
+
+    if (debouncer_timer_button.fell()) {
+        if (!myDisplay.isTiming()) {
+            Serial.println("Timer Button:  startTimer");
+            myDisplay.startTimer();
+        } else {
+            Serial.println("Timer Button:  stopTimer");
+            myDisplay.stopTimer();
+        }
+    }
 
     debouncer_encoder_button.update();
     long newPosition = myEnc.read();
