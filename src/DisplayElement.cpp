@@ -172,7 +172,6 @@ void TimeValue::updateDisplay( LiquidCrystal lcd) {
     if (! isDirty())
         return;
 
-
     long seconds = elapsed / 1000;
     long hundredths = (elapsed % 1000) / 10;
     // Position cursor 
@@ -183,9 +182,11 @@ void TimeValue::updateDisplay( LiquidCrystal lcd) {
 
     sprintf(timeBuf, "%4ld.%02ld", seconds, hundredths);
 
-    // String s = "DistanceValue::updateDisplay - ";
-    // s += distanceBuf;
-    // Serial.println(s);
+    String s = "TimeValue::updateDisplay - ";
+    s += elapsed;
+    s += " -- ";
+    s += timeBuf;
+    Serial.println(s);
 
     lcd.print(timeBuf);
 

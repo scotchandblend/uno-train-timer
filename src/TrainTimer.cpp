@@ -135,7 +135,7 @@ void setup()
 
   // Configure the timer button
   pinMode(TIMER_BUTTON_PIN, INPUT_PULLUP);
-  debouncer_timer_button.attach(ENCODER_BUTTON_PIN);
+  debouncer_timer_button.attach(TIMER_BUTTON_PIN);
   debouncer_timer_button.interval(5); // internal in milliseconds
 
   myDisplay.setup();
@@ -148,6 +148,7 @@ void loop()
     int inputsCount = 0;
     InputEvent inputs[5];
 
+    debouncer_timer_button.update();
     if (debouncer_timer_button.fell()) {
         if (!myDisplay.isTiming()) {
             Serial.println("Timer Button:  startTimer");

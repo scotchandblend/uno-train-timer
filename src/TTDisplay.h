@@ -19,8 +19,8 @@ class TTDisplay {
  public:
     TTDisplay();
     // Timing methods
-    void startTimer() { startTime = millis(); endTime = 0; } // records the start millis
-    void stopTimer()  { endTime = millis(); }   // records the stop millis
+    void startTimer() { startTime = millis(); endTime = 0; tv->setDirty(true);} // records the start millis
+    void stopTimer()  { endTime = millis(); tv->setDirty(true);}   // records the stop millis
     boolean isTiming() { return (startTime > 1 && endTime == 0); }   // true if startTimer is recorded, but no stopTimer yet
     long getElapsed() { if (endTime != 0) { return endTime - startTime; } else { return (millis() - startTime); } }// current time minus start if still timing, else stop - start.
 

@@ -89,19 +89,30 @@ void TTDisplay::input( InputEvent ie ) {
 
 long lastUpdateMillis = 0;
 
+const long timeRefreshInterval = 50;
 
 void TTDisplay::updateDisplay() {
 
-    // Let's set the elapsed into the TimeValue element, and calc speed for the SpeedValue
-    // but only do it every 
+    long curTime = millis();
+    // long elapsedSinceRefresh = curTime - lastUpdateMillis;
 
-    if (isTiming() && (100 > (millis() - lastUpdateMillis))) {
+    // String s("curTime: ");
+    // s += curTime;
+    // s += ", lastUpdateMillis: ";
+    // s += lastUpdateMillis;
+    // s += ", elapsedSinceRefres: ";
+    
+    // Serial.println(s);
+
+
+    if (isTiming() && ((curTime - lastUpdateMillis) > timeRefreshInterval) ) {
         tv->setElapsed( getElapsed());
+        // Serial.print(" Refresh elapsed: ");
+        // Serial.println(tv->getElapsed());
+        lastUpdateMillis = curTime;
     }
     
     for ( int i = 0; i < ELEMENTCOUNT; ++i) {
         elements[i]->updateDisplay(lcd);
     }
-
-    
 }
