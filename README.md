@@ -22,6 +22,10 @@ Time(s)   ScaleSpeed
 0012.3     0013.2mph
 ```
 
+### Schematic
+
+![Schematic](/TrainTimer_schem.png)
+
 ## Notes
 
 - On this display, the input fields are:
