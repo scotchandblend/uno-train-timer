@@ -56,6 +56,31 @@
 #include "DisplayElement.h"
 
 
+
+/*
+ * Document all the I/O pins use
+ *
+ * UNO  | 328
+ * PIN  |    |  What it's hooked to, and why
+ *timer reset pushbutton
+ *  00  | 02 |  
+ *  01  | 03 |
+ *  02  | 04 |  VS1838b #1
+ *  03  | 05 |  IR LEDs (PWM) for 38KHz 
+ *  04  | 06 |  LCD databit 7     ( LCD D7 )
+ *  05  | 11 |  LCD databit 6     ( LCD D6 )
+ *  06  | 12 |  LCD databit 5     ( LCD D5 )
+ *  07  | 13 |  LCD databit 4     ( LCD D4 )
+ *  08  | 14 |  rotary encoder pin 1 :  1/2 of the rotary encoder inputs
+ *  09  | 15 |  rotary encoder pin 2 :  2/2 of the rotary encoder inputs
+ *  10  | 16 |  rotary encoder button pin
+ *  11  | 17 |  LCD E  pin (enable)
+ *  12  | 18 |  LCD RS pin ( high == data signal, low == instruction signal)
+ *  13  | 19 |  Reset Button 
+ *
+ */
+
+
 Scheduler runner;   // Task Scheduler to manage all processing callbacks.
 
 
